@@ -8,8 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Arrow png.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Globals\" />
-    <Folder Include="Views\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Arrow png.png" />
   </ItemGroup>
 
 </Project>

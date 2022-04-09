@@ -35,9 +35,26 @@ namespace OOPproject
 
         }
 
-        private void ChangeValue(object sender, RoutedEventArgs e)
+        private void AddAction(object sender, RoutedEventArgs e)
         {
-            VM.ChangeTextValue();
+            VM.ShowAddMenu();
         }
+
+        private void RemoveAction(object sender, RoutedEventArgs e)
+        {
+            VM.RemoveShape();
+        }
+
+        private void TranslateAction(object sender, RoutedEventArgs e)
+        {
+            VM.ShowTranslateMenu();
+        }
+
+
+        private void ScaleAction(object sender, RoutedEventArgs e)
+        {
+            VM.ShowScaleMenu();
+        }
+
     }
 }

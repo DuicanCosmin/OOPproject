@@ -8,6 +8,8 @@ namespace OOPproject.Models
 {
     public class RectangleClass : ShapeClass
     {
+        #region Proprieries
+
         public override int? ShapeCode { get; set; }
 
         public HorizontalLineClass TopLine { get; set; }
@@ -18,30 +20,44 @@ namespace OOPproject.Models
 
         public VerticalLineClass RightLine { get; set; }
 
-        private int _length;
+        private int _length
+        { get
+            {
+                return Convert.ToInt32( Math.Abs(TopLine.LeftPoint.x_coord - TopLine.RightPoint.x_coord));
+            } 
+        }
 
-        private int _height;
+        private int _height
+        {
+            get
+            {
+                return Convert.ToInt32(Math.Abs(LeftLine.TopPoint.y_coord - LeftLine.BottomPoint.y_coord));
+            }
+        }
+        #endregion
 
+        #region Constructor
         public RectangleClass(PointClass TopPoint,int length, int height)
         {
             ShapeCode = 3;
 
             TopLine = new HorizontalLineClass(TopPoint,new PointClass(TopPoint.x_coord+length,TopPoint.y_coord));
 
-            BottomLine = new HorizontalLineClass(new PointClass(TopPoint.x_coord, TopPoint.y_coord - height), new PointClass(TopPoint.x_coord + length, TopPoint.y_coord - height));
+            BottomLine = new HorizontalLineClass(new PointClass(TopPoint.x_coord, TopPoint.y_coord + height), new PointClass(TopPoint.x_coord + length, TopPoint.y_coord + height));
 
             LeftLine = new VerticalLineClass(TopLine.LeftPoint, BottomLine.LeftPoint);
 
             RightLine = new VerticalLineClass(TopLine.RightPoint, BottomLine.RightPoint);
 
-            _height = height;
-
-            _length = length;
-
-            //BottomLine = new HorizontalLineClass(TopPoint.x_coord, TopPoint.x_coord + length, TopPoint.y_coord - height);
-            
-
         }
+
+        public override RectangleClass CloneShape()
+        {
+            return new RectangleClass(TopLine.LeftPoint.CloneShape(), _length, _height);
+        }
+
+
+        #endregion
 
         #region Translation
 
@@ -92,28 +108,17 @@ namespace OOPproject.Models
 
 
 
-        public override void Display()
+        public override List<CoordinatePair> Display()
         {
-            string outputstring = "";
+            List<CoordinatePair> returnList = new List<CoordinatePair>();
 
-            outputstring += "Top left point x=" + TopLine.LeftPoint.x_coord.ToString() + " y=" + TopLine.LeftPoint.y_coord.ToString();
-            outputstring += "Top right point x=" + TopLine.RightPoint.x_coord.ToString() + " y=" + TopLine.RightPoint.y_coord.ToString();
-            outputstring += "Bottom left point x=" + BottomLine.LeftPoint.x_coord.ToString() + " y=" + BottomLine.LeftPoint.y_coord.ToString();
-            outputstring += "Bottom right point x=" + BottomLine.RightPoint.x_coord.ToString() + " y=" + TopLine.RightPoint.y_coord.ToString();
+            returnList.Add(new CoordinatePair(TopLine.LeftPoint.x_coord,TopLine.LeftPoint.y_coord));
+            returnList.Add(new CoordinatePair(TopLine.RightPoint.x_coord,TopLine.RightPoint.y_coord));
+            returnList.Add(new CoordinatePair(BottomLine.RightPoint.x_coord, BottomLine.RightPoint.y_coord));
+            returnList.Add(new CoordinatePair(BottomLine.LeftPoint.x_coord, BottomLine.LeftPoint.y_coord));
 
-            System.Windows.MessageBox.Show("");
+            return returnList;
         }
 
-        public string DisplayString()
-        {
-            string outputstring = "";
-
-            outputstring += "Top left point x=" + TopLine.LeftPoint.x_coord.ToString() + " y=" + TopLine.LeftPoint.y_coord.ToString() +Environment.NewLine;
-            outputstring += "Top right point x=" + TopLine.RightPoint.x_coord.ToString() + " y=" + TopLine.RightPoint.y_coord.ToString() + Environment.NewLine;
-            outputstring += "Bottom left point x=" + BottomLine.LeftPoint.x_coord.ToString() + " y=" + BottomLine.LeftPoint.y_coord.ToString() + Environment.NewLine;
-            outputstring += "Bottom right point x=" + BottomLine.RightPoint.x_coord.ToString() + " y=" + BottomLine.RightPoint.y_coord.ToString();
-
-            return outputstring;
-        }
     }
 }

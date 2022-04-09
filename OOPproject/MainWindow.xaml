@@ -7,44 +7,147 @@
         xmlns:viewmodels="clr-namespace:OOPproject.ViewModels" 
         d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1200" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        FontSize="20"
+        Title="MainWindow" Height="700" Width="1300" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        >
 
-    <Grid Width="1200" Margin="0,0,0,0">
+    <Grid Width="1300" Margin="0,0,0,0" Background="DarkGray">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0" Background="Red">
+        <Grid Grid.Column="0">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="3*"/>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
+
+
             </Grid.RowDefinitions>
 
-            <DataGrid ItemsSource="{Binding ShapeCollection}" AutoGenerateColumns="False" >
+            <DataGrid ItemsSource="{Binding ShapeCollection}" 
+                      AutoGenerateColumns="False" 
+                      SelectionMode="Single" 
+                      SelectedItem="{Binding SelectedShape}"
+                      CanUserAddRows="False" Cursor="Hand">
+
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name" Binding="{Binding Name}">
-                        
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Shape type" Binding="{Binding TypeOfShape}">
-                        
-                    </DataGridTextColumn>
-                    
+                    <DataGridTextColumn Header="Name" 
+                                        Binding="{Binding Name}" 
+                                        IsReadOnly="True"
+                                        Width="*"/>
+
+
+                    <DataGridTextColumn Header="Shape type" 
+                                        Binding="{Binding TypeOfShape}" 
+                                        IsReadOnly="True" 
+                                        Width="1.5*"/>
+
+
+
                 </DataGrid.Columns>
             </DataGrid>
-            
+
+            <Border Grid.Column="1" Grid.Row="0" BorderBrush="Black" BorderThickness="1">
+                <Grid >
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                        <Button Content="Add" 
+                                Margin="5"
+                                Click="AddAction"
+                                />
+                        <Button Content="Remove" 
+                                Margin="5"
+                                Click="RemoveAction"
+                                IsEnabled="{Binding ShouldButtonBeEnabled}"/>
+                        <Button Content="Translate" 
+                                Margin="5"
+                                Click="TranslateAction"
+                                IsEnabled="{Binding ShouldButtonBeEnabled}"/>
+                        <Button Content="Scale" 
+                                Margin="5"
+                                Click="ScaleAction"
+                                IsEnabled="{Binding ShouldButtonBeEnabled}"/>
+
+
+                    </StackPanel>
+
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
+
+                <Viewbox Stretch="Fill">
+                    <ContentControl Content="{Binding SelectedActionView}"/>
+                </Viewbox>
+
+            </Border>
+
+        </Grid>
+
+        <Grid Grid.Column="2" Height="600" Width="800">
+
+            <Viewbox Height="600" Width="800"  Stretch="Fill"  ClipToBounds="True">
+
+                <Border  Height="600" Width="800">
+                    <ContentControl Content="{Binding GridCanvas}"/>
+                </Border>
+
+
+            </Viewbox>
+        </Grid>
+
+        <Grid Grid.Column="2" Height="600" Width="800">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="363*"/>
+                <ColumnDefinition Width="437*"/>
+            </Grid.ColumnDefinitions>
+
+
+
+            <Viewbox Height="600" Width="800" Stretch="Fill" ClipToBounds="True" Grid.ColumnSpan="2">
+
+                <Border Height="600" Width="800" >
+                    <ContentControl Content="{Binding DrawCanvas}"/>
+                </Border>
+
+
+            </Viewbox>
+
+            <StackPanel Margin="-30,-35,317,581">
+                <TextBlock Text="X axis" TextAlignment="Center" FontSize="15"/>
+                <Image  Source="Images/Arrow png.png" Height="35" />
+
+
+            </StackPanel>
+
+            <StackPanel Margin="-48,-24,335,573" RenderTransformOrigin="0.5,0.5">
+                <StackPanel.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </StackPanel.RenderTransform>
+                <Image  Source="/Images/Arrow png.png" Height="35"  />
+                <TextBlock Text="Y axis" TextAlignment="Center" FontSize="15"/>
+
+            </StackPanel>
+
 
 
         </Grid>
 
-        <Canvas Grid.Column="1" Background="LightBlue"/>
+
+
+
+
 
     </Grid>
 </Window>

@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="OOPproject.Views.TranslateView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OOPproject.Views"
+             xmlns:viewmodels="clr-namespace:OOPproject.ViewModels" 
+             d:DataContext="{d:DesignInstance Type=viewmodels:TranslationViewModel}"
+             mc:Ignorable="d" 
+             FontSize="25"
+             d:DesignHeight="466" d:DesignWidth="433">
+    <Grid Height="466" Width="433">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding ActionHeader}" TextAlignment="Center" VerticalAlignment="Center"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1" 
+                   Text="Translation factor x=" 
+                   TextAlignment="Right"
+                   VerticalAlignment="Center"/>
+
+        <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" 
+                 Text="{Binding InputXstring}"
+                 TextAlignment="Left" VerticalContentAlignment="Center" Margin="0,10,50,10"/>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="1" 
+                   Text="Translation factor Y=" 
+                   TextAlignment="Right"
+                   VerticalAlignment="Center"/>
+
+        <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="1" 
+                 Text="{Binding InputYstring}"
+                 TextAlignment="Left" VerticalContentAlignment="Center" Margin="0,10,50,10"/>
+
+
+        <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding ErrorMessage}" TextAlignment="Center" VerticalAlignment="Center"/>
+
+        <Button Grid.Row="6" Grid.Column="0" Content="OK" Click="OKTranslation"/>
+        <Button Grid.Row="6" Grid.Column="1" Content="Cancel" Click="CancelTranslation"/>
+
+    </Grid>
+</UserControl>

@@ -8,9 +8,15 @@ namespace OOPproject.Models
 {
     public class PointClass : ShapeClass
     {
+
+        #region Properties
         public int x_coord { get; set; }
         public int y_coord { get; set; }
         public override int? ShapeCode { get; set; }
+
+        #endregion
+
+        #region Constructor
 
         public PointClass(int x_coord, int y_coord)
         {
@@ -20,13 +26,17 @@ namespace OOPproject.Models
             this.y_coord = y_coord;
         }
 
-        
 
-        public override void Display()
+       
+
+        public override PointClass CloneShape()
         {
-            // de modificat
-            System.Windows.MessageBox.Show(string.Concat("x=", x_coord.ToString()," ", "y=" , y_coord.ToString()));
+           return new PointClass(x_coord, y_coord);
         }
+
+        #endregion
+
+
 
         #region Translation region
 
@@ -39,7 +49,7 @@ namespace OOPproject.Models
 
         }
 
-        public static PointClass operator +(PointClass shape, TranslationVectorClass TranslationVectror)
+        public static PointClass operator + (PointClass shape, TranslationVectorClass TranslationVectror)
         {
             return shape.Translate(TranslationVectror);
         }
@@ -62,7 +72,15 @@ namespace OOPproject.Models
         #endregion
 
 
+        public override List<CoordinatePair> Display()
+        {
+            List<CoordinatePair> returnList = new List<CoordinatePair>();
 
+            returnList.Add(new CoordinatePair(this.x_coord, this.y_coord));
+            returnList.Add(new CoordinatePair(this.x_coord, this.y_coord));
+
+            return returnList;
+        }
     }
 
 

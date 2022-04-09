@@ -8,32 +8,53 @@ namespace OOPproject.Models
 {
     public class VerticalLineClass : ShapeClass 
     {
+        #region Properties
         public override int? ShapeCode { get; set; }
 
         public PointClass TopPoint { get; set; }
 
         public PointClass BottomPoint { get; set; }
 
+        #endregion
+
+
+        #region Constructor
         public VerticalLineClass(int y_topCoordinate,int y_bottomCoordinate,int x_coord)
         {
             ShapeCode = 2;
 
-            TopPoint = new PointClass(x_coord, y_topCoordinate);
-            BottomPoint = new PointClass(x_coord, y_bottomCoordinate); 
+            TopPoint = new PointClass(x_coord, Math.Max(y_topCoordinate,y_bottomCoordinate));
+            BottomPoint = new PointClass(x_coord, Math.Min(y_topCoordinate, y_bottomCoordinate)); 
 
         }
+
+        
 
         public VerticalLineClass(PointClass InputTopPoint, PointClass InputBottomPoint)
         {
             ShapeCode = 2;
-            TopPoint = InputTopPoint;
-            BottomPoint = InputBottomPoint;
+
+            if(InputTopPoint.y_coord >= InputBottomPoint.y_coord)
+            {
+                TopPoint = InputTopPoint.CloneShape();
+                BottomPoint = InputBottomPoint.CloneShape();
+            }
+            else
+            {
+
+                TopPoint = InputBottomPoint.CloneShape(); 
+                BottomPoint = InputTopPoint.CloneShape();
+            }
+
         }
 
-        public override void Display()
+
+        public override VerticalLineClass CloneShape()
         {
-            System.Windows.MessageBox.Show(string.Concat("y Top=", TopPoint.y_coord.ToString(), " ", "y Bot=", BottomPoint.y_coord.ToString()," " , "x=",TopPoint.x_coord.ToString()));
+            return new VerticalLineClass(TopPoint.y_coord, BottomPoint.y_coord, TopPoint.x_coord);
         }
+
+        #endregion
 
         #region Translation action
 
@@ -57,7 +78,12 @@ namespace OOPproject.Models
 
         internal override VerticalLineClass Scale(ScalingVectorClass ScalingVector)
         {
-            int Scaled_y_topCoordinate = (int)(ScalingVector.Y_factor * TopPoint.y_coord);
+            double height = Math.Abs(TopPoint.y_coord - BottomPoint.y_coord);
+
+            height = height * (ScalingVector.Y_factor - 1);
+
+            int Scaled_y_topCoordinate = (int)(TopPoint.y_coord+ height);
+
             int Scaled_y_bottomCoordinate = BottomPoint.y_coord;
             
             int Scaled_x_coord = TopPoint.x_coord;
@@ -72,5 +98,16 @@ namespace OOPproject.Models
 
         #endregion
 
+
+        public override List<CoordinatePair> Display()
+        {
+            List<CoordinatePair> returnList = new List<CoordinatePair>();
+
+            returnList.Add(new CoordinatePair(TopPoint.x_coord, TopPoint.y_coord));
+            returnList.Add(new CoordinatePair(BottomPoint.x_coord, BottomPoint.y_coord));
+
+
+            return returnList;
+        }
     }
 }
